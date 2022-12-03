@@ -18,20 +18,28 @@ const App = () => {
     const addNode = () => {      
         g.graph.addNode(text, character, optionText)
         setGraphNodes(g.graph.getNodesList())
+        const current = g.graph.getCurrentNodeWithOptions()
+        setCurrentNode(current)
     }
 
     const changeCurrentNode = (id) => {
         g.graph.setCurrentNode(id)
-        setCurrentNode(g.graph.getCurrentNode())
+        const current = g.graph.getCurrentNodeWithOptions()
+        setCurrentNode(current)
     }
 
     return (
-        <>
-            <h1>App</h1>        
+        <>       
             <div style={{display: 'flex'}}>
                 <div style={{margin: '30px'}}>
                     <h3>Current node</h3>
-                    <ConversationPart character={currentNode.character} text={currentNode.text} id={currentNode.id}/>
+                    <CurrentNode 
+                        character={currentNode.node ? currentNode.node.character : ""} 
+                        text={currentNode.node ? currentNode.node.text : ""} 
+                        id={currentNode.node ? currentNode.node.id : ""}
+                        nextNodes={currentNode.optionNodes ? currentNode.optionNodes : []}
+                        parentHandler={changeCurrentNode}
+                    />
                 </div>
                 <div style={{margin: '30px'}}>
                     <h3>Option Text: </h3>
@@ -40,6 +48,8 @@ const App = () => {
                         value={optionText}
                         onChange={(e) => setOptionText(e.target.value)}
                     />
+                </div>
+                <div style={{margin: '30px'}}>
                     <h3>Character: </h3>
                     <input 
                         type="text"
@@ -60,14 +70,14 @@ const App = () => {
                 </div>
                 <div style={{margin: '30px'}}>
                     <h3>RESULT</h3>
-                    {graphNodes.map((p) => (
+                    {graphNodes.reverse().map((p) => (
                         <ConversationPart character={p.character} text={p.text} id={p.id} parentHandler={changeCurrentNode} />
                     ))}
                 </div>
                 <div style={{margin: '30px'}}>
                     <h3>JSON to copy</h3>
                     <pre>
-                        {JSON.stringify(graphNodes, undefined, 2)}
+                        {JSON.stringify(graphNodes.reverse(), undefined, 2)}
                     </pre>
                 </div>
             </div>

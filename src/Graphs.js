@@ -67,14 +67,15 @@ export let graph = (function() {
         getCurrentNodeWithOptions: () => {
             const node = nodes[currentNode]
             const options = nodesToOptions[currentNode]
-            const optionNodes = []
-            
-            for (let o in options) {
-                const oNode = nodesToOptions[o.toNode]
-                optionNodes.push(oNode)
+            const optionToNodes = []
+            for(let o in options) {
+                const opt = options[o]
+                const toNodeId = opt.toNode
+                const optionNode = nodes[toNodeId]
+                optionToNodes.push({option: opt, optionNode: optionNode})
             }
 
-            return {node: node, options: options, optionNodes: optionNodes}
+            return {node: node, options: options, optionNodes: optionToNodes}
         },
     
         setCurrentNode: (id) => {
