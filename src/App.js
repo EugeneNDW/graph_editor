@@ -14,6 +14,7 @@ const App = () => {
     const [optionCondition, setOptionCondition] = useState("")
     
     const [graphNodes, setGraphNodes] = useState([])
+    const [graphLists, setGraphLists] = useState({})
 
     const [currentNode, setCurrentNode] = useState({})
     const [toNode, setToNode] = useState({})
@@ -23,6 +24,7 @@ const App = () => {
     useEffect(() => {
         changeCurrentNode(0)
         setGraphNodes(g.graph.getNodesList())
+        setGraphLists(g.graph.getListsRepresentation)
       }, []);
 
     const submitForm = () => {
@@ -39,6 +41,7 @@ const App = () => {
 
         const current = g.graph.getCurrentNodeWithOptions()
         setCurrentNode(current)
+        setGraphLists(g.graph.getListsRepresentation)
     }
 
     const addNode = () => {      
@@ -46,6 +49,7 @@ const App = () => {
         setGraphNodes(g.graph.getNodesList())
         const current = g.graph.getCurrentNodeWithOptions()
         setCurrentNode(current)
+        setGraphLists(g.graph.getListsRepresentation)
     }
 
     const changeCurrentNode = (id) => {
@@ -72,8 +76,8 @@ const App = () => {
                         character={currentNode.node ? currentNode.node.character : ""} 
                         text={currentNode.node ? currentNode.node.text : ""} 
                         id={currentNode.node ? currentNode.node.id : ""}
-                        processor={currentNode.node ? currentNode.node.processor : ""}
-                        illustration={currentNode.node ? currentNode.node.processor : ""}
+                        processor={currentNode.node ? currentNode.node.processorId : ""}
+                        illustration={currentNode.node ? currentNode.node.illustration : ""}
                         nextNodes={currentNode.optionNodes ? currentNode.optionNodes : []}
                         parentHandler={changeCurrentNode}
                     />
@@ -147,14 +151,14 @@ const App = () => {
                 </div>
                 <div style={{margin: '30px'}}>
                     <h3>Result</h3>
-                    {graphNodes.reverse().map((p) => (
-                        <ChoosableNode character={p.character} text={p.text} id={p.id} processor={p.processor} illustration={p.illustration} currentHandler={changeCurrentNode} toNodeHandler={chooseToNode}/>
+                    {graphNodes.map((p) => (
+                        <ChoosableNode character={p.character} text={p.text} id={p.id} processor={p.processorId} illustration={p.illustration} currentHandler={changeCurrentNode} toNodeHandler={chooseToNode}/>
                     ))}
                 </div>
                 <div style={{margin: '30px'}}>
                     <h3>JSON to copy</h3>
                     <pre>
-                        {JSON.stringify(graphNodes.reverse(), undefined, 2)}
+                        {JSON.stringify(graphLists, undefined, 2)}
                     </pre>
                 </div>
             </div>

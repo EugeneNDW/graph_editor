@@ -5,7 +5,7 @@ export class GraphNode {
         this.id = id
         this.character = character
         this.text = text
-        this.processor = processor
+        this.processorId = processor
         this.illustration = illustration
     }
 }
@@ -60,6 +60,27 @@ export let graph = (function() {
 
         nodesToOptions[fromNode.id].push(option)
     }
+
+    const getAllOptions = () => {
+        const result = [];
+
+        for (let key in nodes) {
+            const options = nodesToOptions[nodes[key].id];
+            result.push(...options);
+        }
+
+        return result
+    }
+
+    const getAllNodes = () => {
+        const result = []
+            
+        for (let key in nodes) {
+            result.push(nodes[key])
+        }
+
+        return result
+    }
     
 
     return {   
@@ -108,13 +129,18 @@ export let graph = (function() {
         },
     
         getNodesList: () => {
-            const result = []
-            
-            for (let key in nodes) {
-                result.push(nodes[key])
-            }
+            return getAllNodes().reverse()
+        },
 
-            return result
+        getAllOptions: () => {
+            return getAllOptions()
+        },
+
+        getListsRepresentation: () => {
+            const options = getAllOptions()
+            const nodes = getAllNodes()
+
+            return { conversationParts: nodes, options: options }
         },
 
         logGraph: () => {
