@@ -50,6 +50,17 @@ export let graph = (function() {
 
         nodesToOptions[node.id].push(option)
     }
+    
+    const addNewOption = (optionText, optionConditionId, fromNode, toNode) => {
+        let option = new Option(optionText, optionConditionId)
+        console.log(option)
+        
+        option.fromNode = fromNode.id
+        option.toNode = toNode.id
+
+        nodesToOptions[fromNode.id].push(option)
+    }
+    
 
     return {   
         buildGraph: () => {
@@ -60,6 +71,10 @@ export let graph = (function() {
 
         addNode: (nodeText, nodeCharacter, optionText, processor, illustration, optionConditionId) => {
             addNodeWithOption(nodeText, nodeCharacter, optionText, processor, illustration, optionConditionId)
+        },
+
+        addOption: (optionText, optionConditionId, fromNode, toNode) => {
+            addNewOption(optionText, optionConditionId, fromNode, toNode)
         },
 
         getCurrentNode: () => {

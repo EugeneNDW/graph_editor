@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ChoosableNode from "./ChoosableNode"
 import ConversationPart from "./ConversationPart";
 import CurrentNode from "./CurrentNode";
 import * as g from "./Graphs"
@@ -8,15 +9,37 @@ const App = () => {
     const [text, setText] = useState("")
     const [processor, setProcessor] = useState("")
     const [illustration, setIllustration] = useState("")
+
     const [optionText, setOptionText] = useState("")
     const [optionCondition, setOptionCondition] = useState("")
+    
     const [graphNodes, setGraphNodes] = useState([])
+
     const [currentNode, setCurrentNode] = useState({})
+    const [toNode, setToNode] = useState({})
+
+    const [createNew, setCreateNew] = useState(false)
 
     useEffect(() => {
         changeCurrentNode(0)
         setGraphNodes(g.graph.getNodesList())
       }, []);
+
+    const submitForm = () => {
+        console.log(toNode)
+        if (createNew) {
+            addNode()
+        } else {
+            addOption()
+        }
+    }
+
+    const addOption = () => {
+        g.graph.addOption(optionText, optionCondition, currentNode.node, toNode)
+
+        const current = g.graph.getCurrentNodeWithOptions()
+        setCurrentNode(current)
+    }
 
     const addNode = () => {      
         g.graph.addNode(text, character, optionText, processor, illustration, optionCondition)
@@ -29,6 +52,15 @@ const App = () => {
         g.graph.setCurrentNode(id)
         const current = g.graph.getCurrentNodeWithOptions()
         setCurrentNode(current)
+    }
+
+    const chooseToNode = (id) => {
+        const to = g.graph.getNodeById(id)
+        setToNode(to)
+    }
+
+    const createNewChanged = () => {
+        setCreateNew(!createNew)
     }
 
     return (
@@ -61,40 +93,62 @@ const App = () => {
                     />
                 </div>
                 <div style={{margin: '30px'}}>
-                    <h3>Character: </h3>
-                    <input 
-                        type="text"
-                        value={character}
-                        onChange={(e) => setCharacter(e.target.value)}
-                    />
-                    <h3>Text: </h3>
-                    <input 
-                        type="text"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                    />
-                    <h3>Processor: </h3>
-                    <input 
-                        type="text"
-                        value={processor}
-                        onChange={(e) => setProcessor(e.target.value)}
-                    />
-                    <h3>Image: </h3>
-                    <input 
-                        type="text"
-                        value={illustration}
-                        onChange={(e) => setIllustration(e.target.value)}
-                    />
+                    <div>
+                        <input 
+                            type="checkbox"
+                            value={createNew}
+                            onChange={createNewChanged}
+                        />
+                        createNew
+                    </div>
+                    {createNew ? (
+                        <>
+                            <div>
+                                <h3>Character: </h3>
+                                <input 
+                                    type="text"
+                                    value={character}
+                                    onChange={(e) => setCharacter(e.target.value)}
+                                />
+                                <h3>Text: </h3>
+                                <input 
+                                    type="text"
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value)}
+                                />
+                                <h3>Processor: </h3>
+                                <input 
+                                    type="text"
+                                    value={processor}
+                                    onChange={(e) => setProcessor(e.target.value)}
+                                />
+                                <h3>Image: </h3>
+                                <input 
+                                    type="text"
+                                    value={illustration}
+                                    onChange={(e) => setIllustration(e.target.value)}
+                                />
+                            </div>
+                        </>
+                    ):(
+                        <>
+                            <div>
+                                <h3>To Node</h3>
+                                 <ConversationPart id={toNode.id} character={toNode.character} text={toNode.text} processor={toNode.processor} illustration={toNode.illustration}/>
+                            </div>
+                        </>
+                    )}
+
                     <div>
                         <button onClick={(e) => {
-                            addNode()
+                            submitForm()
                         }}>Submit</button>
                     </div>
                 </div>
                 <div style={{margin: '30px'}}>
-                    <h3>RESULT</h3>
+                    <h3>Result</h3>
                     {graphNodes.reverse().map((p) => (
-                        <ConversationPart character={p.character} text={p.text} id={p.id} processor={p.processor} illustration={p.illustration} parentHandler={changeCurrentNode} />
+                        <ChoosableNode character={p.character} text={p.text} id={p.id} processor={p.processor} illustration={p.illustration} currentHandler={changeCurrentNode} toNodeHandler={chooseToNode}/>
                     ))}
                 </div>
                 <div style={{margin: '30px'}}>

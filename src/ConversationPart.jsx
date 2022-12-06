@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConversationPart = ({character, text, id, processor, illustration, parentHandler}) => {
+const ConversationPart = ({character, text, id, processor, illustration}) => {
     return (
         <>
             <div>
@@ -9,9 +9,6 @@ const ConversationPart = ({character, text, id, processor, illustration, parentH
                 <p>Text: {text}</p>
                 <p>Processor: {processor}</p>
                 <p>Illustration: {illustration}</p>
-                <button onClick={(e) => {
-                        parentHandler(id)
-                    }}>choose</button>
             </div>
         </>    
     )
