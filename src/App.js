@@ -3,6 +3,8 @@ import ChoosableNode from "./ChoosableNode"
 import ConversationPart from "./ConversationPart";
 import CurrentNode from "./CurrentNode";
 import { graph } from "./Graphs"
+import JsonResultModal from "./JsonResultModal";
+import NodesListModal from "./NodesListModal";
 
 const App = () => {
     const [character, setCharacter] = useState("")
@@ -28,7 +30,6 @@ const App = () => {
       }, []);
 
     const submitForm = () => {
-        console.log(toNode)
         if (createNew) {
             addNode()
         } else {
@@ -47,6 +48,7 @@ const App = () => {
     const addNode = () => {      
         graph.addNode(text, character, optionText, processor, illustration, optionCondition)
         setGraphNodes(graph.getNodesList())
+        
         const current = graph.getCurrentNodeWithOptions()
         setCurrentNode(current)
         setGraphLists(graph.getListsRepresentation)
@@ -71,74 +73,111 @@ const App = () => {
         <>       
             <div className="container mt-5">
                 <div className="row">
-                    <div className="col-sm-2">
-                        <h3>From</h3>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#listModal">open list</button>
+                        <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#jsonModal">open json</button>
+                        <button className="btn btn-block btn-primary" onClick={(e) => {submitForm()}}>Submit</button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <h1>From</h1>
                         <CurrentNode
                             node={currentNode.node}
                             nextNodes={currentNode.optionNodes ? currentNode.optionNodes : []}
                             parentHandler={changeCurrentNode}
                         />
                     </div>
-                    <div className="col-sm-2">
-                        <h3>→</h3>
-                        <label>Option Text: </label>
-                        <input 
-                            type="text"
-                            value={optionText}
-                            onChange={(e) => setOptionText(e.target.value)}
-                        />
-                        <label>Option Condition: </label>
-                        <input 
-                            type="text"
-                            value={optionCondition}
-                            onChange={(e) => setOptionCondition(e.target.value)}
-                        />
+                    <div className="col-sm-4">
+                        <h1>⎯⎯⎯⎯⟶</h1>
+                        <form>
+                            <div className="form-floating">
+                                <input
+                                    className="form-control" 
+                                    type="text"
+                                    value={optionText}
+                                    placeholder="enter option's text"
+                                    id="option-text-input"
+                                    name="option text"
+                                    onChange={(e) => setOptionText(e.target.value)}
+                                />
+                                <label for="option-text-input">option's text</label>
+                            </div>
+                            <div className="form-floating">
+                                <input 
+                                    className="form-control" 
+                                    type="text"
+                                    value={optionCondition}
+                                    placeholder="enter option's condition"
+                                    id="option-condition-input"
+                                    onChange={(e) => setOptionCondition(e.target.value)}
+                                />
+                                <label for="option-condition-input">option's condition</label>
+                            </div>
+                        </form>
                     </div>
-                    <div className="col-sm-2">
-                        <h3>To</h3>
+                    <div className="col-sm-4">
+                        <h1>To</h1>
                         {createNew ? (
                             <>
-                                <div>
-                                    <label>Character: </label>
-                                    <input 
-                                        type="text"
-                                        value={character}
-                                        onChange={(e) => setCharacter(e.target.value)}
-                                    />
-                                    <label>Text: </label>
-                                    <input 
-                                        type="text"
-                                        value={text}
-                                        onChange={(e) => setText(e.target.value)}
-                                    />
-                                    <label>Processor: </label>
-                                    <input 
-                                        type="text"
-                                        value={processor}
-                                        onChange={(e) => setProcessor(e.target.value)}
-                                    />
-                                    <label>Image: </label>
-                                    <input 
-                                        type="text"
-                                        value={illustration}
-                                        onChange={(e) => setIllustration(e.target.value)}
-                                    />
-                                </div>
+                                <form>
+                                    <div className="form-floating">
+                                        <input
+                                            id="node-character-input"
+                                            className="form-control" 
+                                            name="node's character" 
+                                            type="text"
+                                            placeholder="enter node's character"
+                                            value={character}
+                                            onChange={(e) => setCharacter(e.target.value)}
+                                        />
+                                        <label for="node-character-input">Character:</label>
+                                    </div>
+                                    <div className="form-floating">
+                                        <input
+                                            id="node-text-input"
+                                            className="form-control" 
+                                            name="node's text" 
+                                            type="text"
+                                            placeholder="enter node's text"
+                                            value={text}
+                                            onChange={(e) => setText(e.target.value)}
+                                        />
+                                        <label for="node-text-input">Text:</label>
+                                    </div>
+                                    <div className="form-floating">
+                                        <input
+                                            id="node-processor-input"
+                                            className="form-control" 
+                                            name="node's processor" 
+                                            type="text"
+                                            placeholder="enter node's processor"
+                                            value={processor}
+                                            onChange={(e) => setProcessor(e.target.value)}
+                                        />
+                                        <label for="node-processor-input">Processor:</label>
+                                    </div>
+                                    <div className="form-floating">
+                                        <input 
+                                            id="node-illustration-input"
+                                            className="form-control" 
+                                            name="node's illustration"
+                                            type="text"
+                                            placeholder="enter node's illustration"
+                                            value={illustration}
+                                            onChange={(e) => setIllustration(e.target.value)}
+                                        />
+                                        <label for="node-illustration-input">Image:</label>
+                                    </div>
+                                </form>
                             </>
                         ):(
                             <>
                                 <div>
-                                    {console.log(toNode)}
                                      <ConversationPart node={toNode}/>
                                 </div>
                             </>
                         )}
-                        <div className="d-grid">
-                            <button className="btn btn-block btn-primary" onClick={(e) => {
-                                submitForm()
-                            }}>Submit</button>
-                        </div>
-
                         <div>
                             <input
                                 checked={createNew}
@@ -146,23 +185,13 @@ const App = () => {
                                 value={createNew}
                                 onChange={createNewChanged}
                             />
-                            createNew
+                            new
                         </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <h3>Result</h3>
-                        {graphNodes.map((n) => (
-                            <ChoosableNode node={n} currentHandler={changeCurrentNode} toNodeHandler={chooseToNode}/>
-                        ))}
-                    </div>
-                    <div className="col-sm-3">
-                        <h3>JSON to copy</h3>
-                        <pre>
-                            {JSON.stringify(graphLists, undefined, 2)}
-                        </pre>
                     </div>
                 </div>
             </div>
+            <NodesListModal graphNodes={graphNodes} changeCurrentNode={changeCurrentNode} chooseToNode={chooseToNode}/>                    
+            <JsonResultModal result={graphLists} />
         </>
     );
 }

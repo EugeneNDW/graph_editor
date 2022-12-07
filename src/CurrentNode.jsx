@@ -11,16 +11,16 @@ const CurrentNode = ({node, nextNodes, parentHandler}) => {
                         <>
                             <h4>Options</h4>
                             {nextNodes.map((otn) => (
-                                <div>
-                                    <hr/>
-                                    <h5>opt</h5>
-                                    <p>Option uuid: {otn.option.uuid}</p>
-                                    <p>Option text: {otn.option.text}</p>
-                                    <p>Option condition: {otn.option.optionConditionId}</p>
-                                    <p>Node text: {otn.optionNode.text}</p>
-                                    <button onClick={(e) => {
-                                        parentHandler(otn.optionNode.id)
-                                    }}>choose</button>
+                                <div className="card">
+                                    <div className="card-body">
+                                        <p>Option uuid: {otn.option.uuid}</p>
+                                        <p>Option text: {otn.option.text}</p>
+                                        <p>Option condition: {otn.option.optionConditionId}</p>
+                                        <p>Node text: {otn.optionNode.text}</p>
+                                        <button className="btn btn-secondary" onClick={(e) => {
+                                            parentHandler(otn.optionNode.id)
+                                        }}>choose</button>
+                                    </div>
                                 </div>
                             ))}
                         </>
