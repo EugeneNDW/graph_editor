@@ -13,7 +13,6 @@ const CurrentNode = ({node, nextNodes, parentHandler}) => {
                             {nextNodes.map((otn) => (
                                 <div className="card">
                                     <div className="card-body">
-                                        <p>Option uuid: {otn.option.uuid}</p>
                                         <p>Option text: {otn.option.text}</p>
                                         <p>Option condition: {otn.option.optionConditionId}</p>
                                         <p>Node text: {otn.optionNode.text}</p>

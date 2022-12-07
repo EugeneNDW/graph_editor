@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ChoosableNode from "./ChoosableNode"
 import ConversationPart from "./ConversationPart";
 import CurrentNode from "./CurrentNode";
 import { graph } from "./Graphs"
@@ -35,6 +34,7 @@ const App = () => {
         } else {
             addOption()
         }
+        clearForm()
     }
 
     const addOption = () => {
@@ -67,6 +67,16 @@ const App = () => {
 
     const createNewChanged = () => {
         setCreateNew(!createNew)
+    }
+
+    const clearForm = () => {
+        setCharacter("")
+        setText("")
+        setProcessor("")
+        setIllustration("")
+
+        setOptionText("")
+        setOptionCondition("")
     }
 
     return (
