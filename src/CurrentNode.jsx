@@ -6,8 +6,11 @@ const CurrentNode = ({character, text, id, processor, illustration, nextNodes, p
         <>
             <div>
                 <ConversationPart character={character} text={text} id={id} processor={processor} illustration={illustration} />
+                <h4>Options</h4>
                 {nextNodes.map((otn) => (
                     <div>
+                        <hr/>
+                        <h5>opt</h5>
                         <p>Option uuid: {otn.option.uuid}</p>
                         <p>Option text: {otn.option.text}</p>
                         <p>Option condition: {otn.option.optionConditionId}</p>

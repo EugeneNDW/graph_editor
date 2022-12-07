@@ -6,12 +6,16 @@ const ChoosableNode = ({character, text, id, processor, illustration, currentHan
     return (
         <>
             <ConversationPart character={character} text={text} id={id} processor={processor} illustration={illustration} />
-            <button onClick={(e) => {
-                currentHandler(id)
-            }}>choose current</button>
-            <button onClick={(e) => {
-                toNodeHandler(id)
-            }}>choose to node</button>
+            <div className="btn-group">
+                <button className="btn btn-secondary" onClick={(e) => {
+                    currentHandler(id)
+                }}>set from</button>
+            </div>
+            <div className="btn-group">
+                <button className="btn btn-secondary" onClick={(e) => {
+                    toNodeHandler(id)
+                }}>set to</button>
+            </div>
         </>
     )
 }
