@@ -1,14 +1,14 @@
 import React from "react";
 
-const ConversationPart = ({character, text, id, processor, illustration}) => {
+const ConversationPart = ({node}) => {
     return (
-        <>
+        <>  
             <div>
-                <p>id: {id}</p>
-                <p>Character: {character}</p>
-                <p>Text: {text}</p>
-                <p>Processor: {processor}</p>
-                <p>Illustration: {illustration}</p>
+                <p>id: {node.id}</p>
+                <p>Character: {node.character}</p>
+                <p>Text: {node.text}</p>
+                <p>Processor: {node.processor}</p>
+                <p>Illustration: {node.illustration}</p>
             </div>
         </>    
     )

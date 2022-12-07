@@ -2,18 +2,18 @@ import React from "react";
 import ConversationPart from "./ConversationPart";
 
 
-const ChoosableNode = ({character, text, id, processor, illustration, currentHandler, toNodeHandler}) => {
+const ChoosableNode = ({node, currentHandler, toNodeHandler}) => {
     return (
         <>
-            <ConversationPart character={character} text={text} id={id} processor={processor} illustration={illustration} />
+            <ConversationPart node={node} />
             <div className="btn-group">
                 <button className="btn btn-secondary" onClick={(e) => {
-                    currentHandler(id)
+                    currentHandler(node.id)
                 }}>set from</button>
             </div>
             <div className="btn-group">
                 <button className="btn btn-secondary" onClick={(e) => {
-                    toNodeHandler(id)
+                    toNodeHandler(node.id)
                 }}>set to</button>
             </div>
         </>
