@@ -29,12 +29,49 @@ const App = () => {
       }, []);
 
     const submitForm = () => {
-        if (createNew) {
-            addNode()
-        } else {
-            addOption()
+        if (formIsValid()) {
+            if (createNew) {
+                addNode()
+            } else {
+                addOption()
+            }
+    
+            clearForm()
         }
-        clearForm()
+    }
+
+    const formIsValid = () => {
+        let result = true
+        let errorMessage = ""
+
+        if (!createNew && Object.keys(toNode).length === 0 && Object.getPrototypeOf(toNode) === Object.prototype) {
+            errorMessage += "to node is empty\n"
+            result = false
+        }
+        
+        console.log(currentNode.node.id + " " + toNode.id)
+        if (!createNew && currentNode.node.id === toNode.id) {
+            errorMessage += "can't create link from node to herself\n"
+            result = false
+        }
+
+        if (!optionText) {
+            errorMessage += "option text is empty\n"
+            result = false
+        }
+
+        if (createNew && !character) {
+            errorMessage += "character is empty\n"
+            result = false
+        }
+
+        if (createNew && !text) {
+            errorMessage += "text is empty\n"
+            result = false
+        }
+
+        if (!result) { alert(errorMessage) }
+        return result
     }
 
     const addOption = () => {
