@@ -8,7 +8,7 @@ const ConversationPart = ({node}) => {
                     <p>id: {node.id}</p>
                     <p>Character: {node.character}</p>
                     <p>Text: {node.text}</p>
-                    <p>Processor: {node.processor}</p>
+                    <p>Processor: {node.processorId}</p>
                     <p>Illustration: {node.illustration}</p>
                 </div>
             </div>

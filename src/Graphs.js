@@ -13,8 +13,8 @@ export class GraphNode {
 export class Option {
     constructor(text, optionConditionId) {
         this.uuid = uuidv4();
-        this.fromNode = null
-        this.toNode = null
+        this.fromId = null
+        this.toId = null
         this.text = text
         this.optionConditionId = optionConditionId
     }
@@ -29,9 +29,10 @@ const objectMap = (obj, fn) =>
 
 export let graph = (function() {
     let idStart = 0
+    let currentNode = 0
+
     const nodes = {}
     const nodesToOptions = {}
-    let currentNode = 0
 
     const idCounter = () => {
         return idStart++
@@ -42,8 +43,8 @@ export let graph = (function() {
         let option = new Option(optionText, optionConditionId)
         let node = nodes[currentNode]
 
-        option.fromNode = node.id
-        option.toNode = toNode.id
+        option.fromId = node.id
+        option.toId = toNode.id
 
         nodes[toNode.id] = toNode
         nodesToOptions[toNode.id] = []
@@ -55,8 +56,8 @@ export let graph = (function() {
         let option = new Option(optionText, optionConditionId)
         console.log(option)
         
-        option.fromNode = fromNode.id
-        option.toNode = toNode.id
+        option.fromId = fromNode.id
+        option.toId = toNode.id
 
         nodesToOptions[fromNode.id].push(option)
     }
@@ -84,12 +85,6 @@ export let graph = (function() {
     
 
     return {   
-        buildGraph: () => {
-            let startNode = new GraphNode(idCounter(), "TECHNICAL", "TECH")
-            nodes[startNode.id] = startNode
-            nodesToOptions[startNode.id] = []
-        },
-
         addNode: (nodeText, nodeCharacter, optionText, processor, illustration, optionConditionId) => {
             addNodeWithOption(nodeText, nodeCharacter, optionText, processor, illustration, optionConditionId)
         },
@@ -108,7 +103,7 @@ export let graph = (function() {
             const optionToNodes = []
             for(let o in options) {
                 const opt = options[o]
-                const toNodeId = opt.toNode
+                const toNodeId = opt.toId
                 const optionNode = nodes[toNodeId]
                 optionToNodes.push({option: opt, optionNode: optionNode})
             }
@@ -136,6 +131,12 @@ export let graph = (function() {
             return getAllOptions()
         },
 
+        createStartNode: (character, text, processor, illustration) => {
+            let startNode = new GraphNode(idCounter(), character, text, processor, illustration)
+            nodes[startNode.id] = startNode
+            nodesToOptions[startNode.id] = []
+        },
+
         getListsRepresentation: () => {
             const options = getAllOptions()
             const nodes = getAllNodes()
@@ -150,4 +151,4 @@ export let graph = (function() {
     }
 }());
 
-graph.buildGraph()
+// graph.buildGraph()
