@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/graph_editor/static/css/main.c2cab247.css",
+    "main.js": "/graph_editor/static/js/main.5845a22f.js",
+    "index.html": "/graph_editor/index.html",
+    "main.c2cab247.css.map": "/graph_editor/static/css/main.c2cab247.css.map",
+    "main.5845a22f.js.map": "/graph_editor/static/js/main.5845a22f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c2cab247.css",
+    "static/js/main.5845a22f.js"
+  ]
+}
