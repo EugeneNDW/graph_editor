@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/graph_editor/static/css/main.c2cab247.css",
-    "main.js": "/graph_editor/static/js/main.5845a22f.js",
+    "main.js": "/graph_editor/static/js/main.2abc27e7.js",
     "index.html": "/graph_editor/index.html",
     "main.c2cab247.css.map": "/graph_editor/static/css/main.c2cab247.css.map",
-    "main.5845a22f.js.map": "/graph_editor/static/js/main.5845a22f.js.map"
+    "main.2abc27e7.js.map": "/graph_editor/static/js/main.2abc27e7.js.map"
   },
   "entrypoints": [
     "static/css/main.c2cab247.css",
-    "static/js/main.5845a22f.js"
+    "static/js/main.2abc27e7.js"
   ]
 }
