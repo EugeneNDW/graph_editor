@@ -11,11 +11,11 @@ export class GraphNode {
 }
 
 export class Option {
-    constructor(text, optionConditionId) {
+    constructor(optionText, optionConditionId) {
         this.uuid = uuidv4();
         this.fromId = null
         this.toId = null
-        this.text = text
+        this.optionText = optionText
         this.optionConditionId = optionConditionId
     }
 }
