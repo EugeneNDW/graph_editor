@@ -42,7 +42,7 @@ const App = () => {
 
     const submitFirstNodeForm = () => {
         if (createFirstFormIsValid()) {   
-            graph.createStartNode(text, character, processor, illustration)
+            graph.createStartNode(character, text, processor, illustration)
 
             const current = graph.getCurrentNodeWithOptions()
             setCurrentNode(current)
